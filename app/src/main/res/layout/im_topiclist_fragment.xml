@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:titlelayout="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".business.im.topiclist.fragment.TopicListFragment">
+
+    <com.srt.imuirefactor.customize.view.ImTitleLayout
+        android:id="@+id/im_title_layout"
+        titlelayout:im_left_margin="15dp"
+        titlelayout:im_right_margin="15dp"
+        titlelayout:im_title_left_img="@mipmap/ic_launcher"
+        titlelayout:im_title_right_img="@mipmap/ic_launcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/im_topiclist_fragment_swiperefreshlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/im_topiclist_fragment_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+
+
+</LinearLayout>

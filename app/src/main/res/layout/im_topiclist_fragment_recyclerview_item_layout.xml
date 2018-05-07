@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/im_topiclist_recyclerview_topic_avaral_imageview"
+        tools:src="@mipmap/ic_launcher"
+
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/im_topiclist_recyclerview_topic_name_textview"
+        tools:text="topicName"
+
+        android:layout_toRightOf="@+id/im_topiclist_recyclerview_topic_avaral_imageview"
+        android:layout_alignTop="@+id/im_topiclist_recyclerview_topic_avaral_imageview"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/im_topiclist_recyclerview_latestmsg_content_textview"
+        tools:text="topicContent"
+        android:layout_toRightOf="@+id/im_topiclist_recyclerview_topic_avaral_imageview"
+        android:layout_alignBottom="@+id/im_topiclist_recyclerview_topic_avaral_imageview"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/im_topiclist_recyclerview_latestmsg_time_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>
