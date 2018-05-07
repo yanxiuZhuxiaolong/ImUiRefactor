@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.srt.imuirefactor.R;
 import com.srt.imuirefactor.business.im.interfaces.RecyclerViewItemOnClickListener;
@@ -101,20 +102,15 @@ public final class ImTopicListRecyclerViewAdapter<E extends MockTopicDataBean> e
      * 对于私聊topic 加载 member
      * */
     private void loadTopicAvaral(ImageView imageView,String imgUrl,int w,int h) {
+        //默认选项
+        RequestOptions options=new RequestOptions()
+                .centerCrop()
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher);
+        //加载
         Glide.with(mContext)
                 .load(imgUrl)
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-
-                        return false;
-                    }
-                })
+                .apply(options)
                 .into(imageView);
     }
 
