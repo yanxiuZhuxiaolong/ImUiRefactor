@@ -34,14 +34,14 @@ public final class ImTopicListRecyclerViewAdapter<E extends MockTopicDataBean> e
 
     /**
      * 数据集合
-     * */
+     */
     private List<E> dataList;
 
     private Context mContext;
 
     /**
      * recyclerview 点击监听
-     * */
+     */
     private RecyclerViewItemOnClickListener mRecyclerViewItemOnClickListener;
 
     public void setmRecyclerViewItemOnClickListener(RecyclerViewItemOnClickListener mRecyclerViewItemOnClickListener) {
@@ -60,39 +60,39 @@ public final class ImTopicListRecyclerViewAdapter<E extends MockTopicDataBean> e
     @NonNull
     @Override
     public ImTopicListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(mContext)
-                .inflate(R.layout.im_topiclist_fragment_recyclerview_item_layout,parent,false);
+        View view = LayoutInflater.from(mContext)
+                .inflate(R.layout.im_topiclist_fragment_recyclerview_item_layout, parent, false);
         return new ImTopicListViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ImTopicListViewHolder holder, int position) {
-        setData(holder,dataList.get(position));
+        setData(holder, dataList.get(position));
     }
 
 
     @Override
     public int getItemCount() {
-        return dataList==null?0:dataList.size();
+        return dataList == null ? 0 : dataList.size();
     }
 
-    private void setData(ImTopicListViewHolder holder,E data){
+    private void setData(ImTopicListViewHolder holder, E data) {
         //获取最新的消息内容
-        StringBuilder msgContent=new StringBuilder();
+        StringBuilder msgContent = new StringBuilder();
         msgContent.append("senderName:");
         //判断是否是图片 内容
-        boolean isImgMsg=TextUtils.equals(data.getType(),"20");
-        msgContent.append(isImgMsg?"[图片]":data.getLatestMsg().getMsg());
+        boolean isImgMsg = TextUtils.equals(data.getType(), "20");
+        msgContent.append(isImgMsg ? "[图片]" : data.getLatestMsg().getMsg());
         holder.latestMsgContent.setText(msgContent.toString());
         //判断topic 类型
-        boolean isGroupType= TextUtils.equals(data.getType(),"2");
+        boolean isGroupType = TextUtils.equals(data.getType(), "2");
         //设置 topic name
         holder.topicNameTv.setText(data.getGroupName());
         // 设置topic 头像
-        if (isGroupType){
+        if (isGroupType) {
             holder.topicImage.setImageResource(R.mipmap.ic_launcher);
-        }else {
-            loadTopicAvaral(holder.topicImage,data.getImgUrl(),0,0);
+        } else {
+            loadTopicAvaral(holder.topicImage, data.getImgUrl(), 0, 0);
         }
         //设置发送时间
         holder.latestMsgTime.setText(timeFormate(data.getLatestMsg().getSendTime()));
@@ -100,10 +100,15 @@ public final class ImTopicListRecyclerViewAdapter<E extends MockTopicDataBean> e
 
     /**
      * 对于私聊topic 加载 member
-     * */
-    private void loadTopicAvaral(ImageView imageView,String imgUrl,int w,int h) {
-        //默认选项
-        RequestOptions options=new RequestOptions()
+     */
+    private void loadTopicAvaral(ImageView imageView, String imgUrl, int w, int h) {
+        ViewGroup.LayoutParams params = imageView.getLayoutParams();
+        params.width = w;
+        params.height = h;
+        imageView.setLayoutParams(params);
+
+        //选项
+        RequestOptions options = new RequestOptions()
                 .centerCrop()
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher);
@@ -115,12 +120,10 @@ public final class ImTopicListRecyclerViewAdapter<E extends MockTopicDataBean> e
     }
 
 
-    private String timeFormate(long timeMillis){
-        SimpleDateFormat dateFormat=new SimpleDateFormat("hh:mm:ss");
-       return  dateFormat.format(new Date(timeMillis));
+    private String timeFormate(long timeMillis) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
+        return dateFormat.format(new Date(timeMillis));
     }
-
-
 
 
     /**
@@ -130,18 +133,17 @@ public final class ImTopicListRecyclerViewAdapter<E extends MockTopicDataBean> e
      * TextView groupName
      * TextView latestMsg sender name + latestMsg content
      * TextView latestMsg Time
-     *
-     * */
-    static class ImTopicListViewHolder extends RecyclerView.ViewHolder{
+     */
+    static class ImTopicListViewHolder extends RecyclerView.ViewHolder {
         private TextView topicNameTv;
         private TextView latestMsgContent;
         private TextView latestMsgTime;
         private ImageView topicImage;
+
         public ImTopicListViewHolder(@NonNull View itemView) {
             super(itemView);
-            topicImage=itemView.findViewById(R.id.im_topiclist_recyclerview_topic_avaral_imageview);
-            latestMsgContent=itemView.findViewById(R.id.im_topiclist_recyclerview_latestmsg_content_textview);
-
+            topicImage = itemView.findViewById(R.id.im_topiclist_recyclerview_topic_avaral_imageview);
+            latestMsgContent = itemView.findViewById(R.id.im_topiclist_recyclerview_latestmsg_content_textview);
         }
     }
 }
