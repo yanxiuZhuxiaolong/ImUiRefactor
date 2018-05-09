@@ -40,17 +40,22 @@ public class DecorateAdapter extends RecyclerView.Adapter<AbstractViewHolder> {
         innerAdapter = new DataAdapter<MockMsgDataBean>(context, datalist);
     }
 
+
+    private boolean hasFooterView=true;
     /**
      * 每次 拉取到新数据 并 加入到数据集更新UI 后 添加
      * */
     public void addFooterView(){
-
+        hasFooterView=true;
+        notifyItemInserted(getItemCount());
     }
     /**
      * 每次拉取到数据后 删除foot
      * */
     public void removeFooterView(){
-
+        Log.i(TAG, "removeFooterView: ");
+        hasFooterView=false;
+        notifyItemRemoved(getItemCount());
     }
 
 
@@ -60,7 +65,7 @@ public class DecorateAdapter extends RecyclerView.Adapter<AbstractViewHolder> {
         if (position == innerAdapter.getItemCount()) {
             return ITEM_TYPE_FOOTER;
         }
-        return ITEM_TYPE_DATA;
+        return innerAdapter.getItemViewType(position);
     }
 
     @NonNull
@@ -91,7 +96,7 @@ public class DecorateAdapter extends RecyclerView.Adapter<AbstractViewHolder> {
             }
         } else if (type == ITEM_TYPE_FOOTER || type == ITEM_TYPE_HEADER) {
             Log.i("DecorateAdapter", "onBindViewHolder: footer");
-            if (loadMoreListener != null) {
+            if (loadMoreListener != null&&hasFooterView) {
                 loadMoreListener.onFooterViewVisiable();
             }
         }
@@ -102,7 +107,9 @@ public class DecorateAdapter extends RecyclerView.Adapter<AbstractViewHolder> {
     @Override
     public int getItemCount() {
         //判断footview是否存在
-        return innerAdapter.getItemCount()+(footerView==null?0:1);
+        int size= innerAdapter.getItemCount()+(hasFooterView?1:0);
+        Log.i(TAG, "getItemCount: "+size);
+        return size;
     }
 
     public void setDataList(ArrayList<MockMsgDataBean> dataList) {

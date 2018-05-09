@@ -15,45 +15,93 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
-        android:visibility="invisible"
-        android:layout_alignTop="@+id/sender_avaral"
-        android:layout_toLeftOf="@+id/sender_avaral"
+        android:visibility="gone"
         android:id="@+id/sender_name"
         android:layout_width="wrap_content"
-        android:layout_height="0dp" />
-
+        android:layout_height="wrap_content" />
     <ImageView
         android:layout_below="@+id/data"
-        android:layout_marginRight="8dp"
-        android:layout_alignParentRight="true"
-        android:id="@+id/sender_avaral"
-        tools:src="@mipmap/ic_launcher"
-        android:layout_width="50dp"
-        android:layout_height="50dp" />
-
-    <TextView
-        android:layout_toLeftOf="@+id/sender_avaral"
-        android:layout_below="@+id/sender_name"
-        tools:text="@string/app_name"
-        android:visibility="visible"
-        android:id="@+id/msg_textview"
+        android:id="@+id/img_glide"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <ImageView
-        android:layout_toLeftOf="@+id/sender_avaral"
-        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+    <RelativeLayout
         android:layout_below="@+id/data"
-        tools:src="@mipmap/ic_launcher"
-        android:id="@+id/msg_imageview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#dfe3e5">
 
-    <TextView
+        <ImageView
+            tools:src="@mipmap/ic_launcher"
+            android:id="@+id/sender_avaral"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerCrop" />
 
-        android:visibility="gone"
-        tools:text="以上为历史消息"
-        android:id="@+id/history_line"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <!--<com.test.yanxiu.im_ui.view.RoundCornerMaskView-->
+        <!--android:layout_width="40dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--im:corner_radius="5dp"-->
+        <!--im:mask_color="#dfe3e5" />-->
+
+        <RelativeLayout
+            android:id="@+id/rl_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="64dp"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/sender_avaral">
+
+            <TextView
+                android:id="@+id/msg_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_msg_blue"
+                android:gravity="center_vertical"
+                android:minHeight="40dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="16dp"
+                android:paddingTop="10dp"
+                android:textColor="#ffffff"
+                android:lineSpacingExtra="4dp"
+                android:textSize="16dp" />
+
+            <com.srt.imuirefactor.customize.view.ProgressImageContainer
+                android:id="@+id/imageview_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+
+        </RelativeLayout>
+
+
+        <ProgressBar
+            android:id="@+id/state_sending_progressbar"
+            style="@android:style/Widget.ProgressBar.Small"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignLeft="@id/rl_msg"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="-34dp"
+            android:layout_marginTop="15dp" />
+
+        <ImageView
+            android:id="@+id/state_fail_imageview"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignLeft="@id/rl_msg"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="-34dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/icon_send_state_failed" />
+
+    </RelativeLayout>
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.srt.imuirefactor.business.im.photoview;
+package com.srt.imuirefactor.business.im.photoview.activity;
 
 import android.app.Activity;
 import android.content.Intent;

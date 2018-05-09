@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -19,10 +18,9 @@ import com.srt.imuirefactor.business.im.mock.MockMsgDataBean;
 import com.srt.imuirefactor.business.im.msglist.adapter.DecorateAdapter;
 import com.srt.imuirefactor.business.im.msglist.interfaces.MsgListContact;
 import com.srt.imuirefactor.business.im.msglist.interfaces.impls.MsgListPresenter;
-import com.srt.imuirefactor.business.im.photoview.GalleryActivity;
+import com.srt.imuirefactor.business.im.photoview.activity.GalleryActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MsgListActivity extends AppCompatActivity implements MsgListContact.IView<MockMsgDataBean> {
     private final String TAG=getClass().getSimpleName();
@@ -101,11 +99,14 @@ public class MsgListActivity extends AppCompatActivity implements MsgListContact
 
     @Override
     public void onLoadMore(int size) {
-        //首先删除 footview
-
-        msgRecyclerAdapter.notifyItemRemoved(msgRecyclerAdapter.getItemCount()-size-1);
+        //首先通知移除 footview
+        msgRecyclerAdapter.removeFooterView();
+        //然后通知插入 新数据
         msgRecyclerAdapter.notifyItemRangeInserted(msgRecyclerAdapter.getItemCount()-size-1,
                 msgRecyclerAdapter.getItemCount()-1);
+        if (size>0) {
+            msgRecyclerAdapter.addFooterView();
+        }
     }
 
     @Override

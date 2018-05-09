@@ -16,9 +16,6 @@ import java.util.Iterator;
  */
 
 public class ImTopicSorter {
-
-
-
     /**
      * 将原始topic 列表 按照 群聊私聊的不同 进行一次 排序
      * 群聊在前 私聊在后
@@ -69,16 +66,16 @@ public class ImTopicSorter {
      * 这次排序 根据 lstestMsgId 以及 latestMsgSendTime来进行
      * 排序比较标准为 以消息最新者置顶
      * */
-    public static void sortForSetUp(ArrayList<MockTopicDataBean> topicList){
+    public static void sortByLatestTime(ArrayList<MockTopicDataBean> topicList){
         synchronized (topicList) {
             //
             Comparator<MockTopicDataBean> comparator = new Comparator<MockTopicDataBean>() {
                 @Override
                 public int compare(MockTopicDataBean t1, MockTopicDataBean t2) {
                     if (t1.getLatestMsg().getSendTime()>t2.getLatestMsg().getSendTime()) {
-                        return 1;
-                    }else if (t1.getLatestMsg().getSendTime()<t2.getLatestMsg().getSendTime()){
                         return -1;
+                    }else if (t1.getLatestMsg().getSendTime()<t2.getLatestMsg().getSendTime()){
+                        return 1;
                     }else {
                         return 0;
                     }

@@ -110,7 +110,7 @@ public class DataReponsery {
             //设置消息id
             dataBean.setMsgId(latestDataBean.getMsgId() - random.nextInt(5));
             //随机消息类型 80%生成图片消息
-            if (random.nextInt(6) > 4) {
+            if (random.nextInt(6) > 0) {
                 //文字
                 dataBean.setType("10");
                 int position = random.nextInt(mockStr.length - 1);
@@ -127,7 +127,7 @@ public class DataReponsery {
 
             }
             //随机发送者
-            dataBean.setSenderId(random.nextInt(10));
+            dataBean.setSenderId(random.nextInt(3));
             dataBean.setSenderName("senderId : " + dataBean.getSenderId());
             msgDataInMemory.add(dataBean);
         }

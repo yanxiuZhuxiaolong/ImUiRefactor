@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.srt.imuirefactor.business.im.photoview.GalleryActivity">
+    android:background="@android:color/black"
+    tools:context="com.srt.imuirefactor.business.im.photoview.activity.GalleryActivity">
     <android.support.v4.view.ViewPager
-        android:background="#99000000"
         android:id="@+id/im_gallery_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

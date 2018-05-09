@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <android.support.v7.widget.RecyclerView
+        android:background="#99000000"
         android:focusable="true"
         android:layout_below="@+id/im_title_layout"
         android:id="@+id/im_msglist_recyclerview"

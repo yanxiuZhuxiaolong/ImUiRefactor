@@ -23,7 +23,7 @@
         <activity
             android:name=".business.im.msglist.activity.MsgListActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".business.im.photoview.GalleryActivity"
+        <activity android:name=".business.im.photoview.activity.GalleryActivity"
             android:theme="@style/AppFullScreenTheme"/>
     </application>
 

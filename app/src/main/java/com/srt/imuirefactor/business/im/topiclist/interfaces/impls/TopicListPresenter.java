@@ -54,10 +54,10 @@ public class TopicListPresenter implements TopicListContact.Presenter {
     };
     @Override
     public void doGetTopicList(int imId) {
-       dataReponsery.createMockTopicList();
+        Log.i(TAG, "doGetTopicList: ");
         if (view != null) {
             ArrayList<MockTopicDataBean> topicList=DataReponsery.getInstance(mContext).getTopicDataInMemory();
-            ImTopicSorter.sortForSetUp(topicList);
+            ImTopicSorter.sortByLatestTime(topicList);
             view.onGetTopicList(topicList);
         }
     }

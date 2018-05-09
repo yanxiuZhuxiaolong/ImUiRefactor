@@ -5,6 +5,13 @@ package com.srt.imuirefactor.business.im.mock;
  */
 
 public class MockMsgDataBean {
+
+    public  static int count;
+
+    public MockMsgDataBean() {
+        count++;
+    }
+
     //消息类型
     String type="10";
     //消息内容
