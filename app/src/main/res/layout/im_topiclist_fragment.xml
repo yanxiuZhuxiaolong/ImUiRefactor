@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,25 +7,57 @@
     tools:context=".business.im.topiclist.fragment.TopicListFragment">
 
     <com.srt.imuirefactor.customize.view.ImTitleLayout
+        android:layout_alignParentTop="true"
         android:id="@+id/im_title_layout"
-        titlelayout:im_left_margin="15dp"
+        titlelayout:im_left_margin="10dp"
         titlelayout:im_right_margin="15dp"
-        titlelayout:im_title_left_img="@mipmap/ic_launcher"
-        titlelayout:im_title_right_img="@mipmap/ic_launcher"
+        titlelayout:im_title_left_img="@drawable/im_left_drawer_normal"
+        titlelayout:im_title_bottom_line_color="@color/colorPrimary"
+        titlelayout:im_title_bottom_line_height="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/im_topiclist_fragment_swiperefreshlayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!--<android.support.v4.widget.SwipeRefreshLayout-->
+        <!--android:id="@+id/im_topiclist_fragment_swiperefreshlayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
         <android.support.v7.widget.RecyclerView
+            android:layout_below="@+id/im_title_layout"
+            android:layout_above="@+id/bottom_layout"
             android:id="@+id/im_topiclist_fragment_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    <!--</android.support.v4.widget.SwipeRefreshLayout>-->
+
+    <LinearLayout
+        android:id="@+id/bottom_layout"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/addtopic"
+            android:text="新topic"
+            android:layout_weight="1"
+            android:onClick="removeTopic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/removetopic"
+            android:text="删topic"
+            android:layout_weight="1"
+            android:onClick="addTopic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/msg"
+            android:text="新消息"
+            android:layout_weight="1"
+            android:onClick="msgTopic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 
-
-
-</LinearLayout>
+</RelativeLayout>

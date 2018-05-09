@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.srt.imuirefactor">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,7 +20,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".business.im.DemoActivity" />
-        <activity android:name=".business.im.activity.MsgListActivity"></activity>
+        <activity
+            android:name=".business.im.msglist.activity.MsgListActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".business.im.photoview.GalleryActivity"
+            android:theme="@style/AppFullScreenTheme"/>
     </application>
 
 </manifest>

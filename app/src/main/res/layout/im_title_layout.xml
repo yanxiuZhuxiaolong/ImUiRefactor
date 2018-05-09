@@ -3,17 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center_vertical"
     android:layout_width="match_parent"
-    android:background="@color/colorAccent"
-    android:layout_height="48dp">
+    android:layout_height="44dp">
 
     <ImageView
         tools:visibility="visible"
         tools:src="@mipmap/ic_launcher"
         android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
         android:id="@+id/title_left_img"
         android:scaleType="fitStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
 
     <TextView
         android:layout_centerVertical="true"
@@ -37,10 +37,11 @@
         tools:visibility="visible"
         tools:src="@mipmap/ic_launcher"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:scaleType="fitEnd"
         android:id="@+id/title_right_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
 
     <TextView
 
@@ -51,5 +52,10 @@
         android:id="@+id/title_right_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
+    <View
+        android:layout_alignParentBottom="true"
+        android:id="@+id/title_bottom_line"
+        android:background="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
 </RelativeLayout>

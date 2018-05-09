@@ -17,6 +17,7 @@
 
     <Button
         android:id="@+id/msg_list"
+        android:enabled="false"
         android:text="msg 列表"
         android:onClick="toMsgList"
         android:textAllCaps="false"

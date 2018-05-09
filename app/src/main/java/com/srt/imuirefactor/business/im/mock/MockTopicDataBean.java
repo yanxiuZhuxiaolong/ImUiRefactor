@@ -11,7 +11,21 @@ public class MockTopicDataBean {
     String groupName;
     String imgUrl;
     MockMsgDataBean latestMsg;
+    boolean showDot;
 
+    public boolean isShowDot() {
+        return showDot;
+    }
+
+    public void setShowDot(boolean showDot) {
+        this.showDot = showDot;
+    }
+
+    public MockTopicDataBean() {
+        count++;
+    }
+
+    public static int count=0;
 
     public String getImgUrl() {
         return imgUrl;

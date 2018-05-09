@@ -1,6 +1,7 @@
 package com.srt.imuirefactor.business.im.topiclist.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,6 +22,7 @@ import com.bumptech.glide.request.target.Target;
 import com.srt.imuirefactor.R;
 import com.srt.imuirefactor.business.im.interfaces.RecyclerViewItemOnClickListener;
 import com.srt.imuirefactor.business.im.mock.MockTopicDataBean;
+import com.srt.imuirefactor.customize.view.CircleView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -57,17 +59,34 @@ public final class ImTopicListRecyclerViewAdapter<E extends MockTopicDataBean> e
         this.mContext = mContext;
     }
 
+    public void setDataList(List<E> dataList) {
+        this.dataList = dataList;
+    }
+
+    public List<E> getDataList() {
+        return dataList;
+    }
+
     @NonNull
     @Override
     public ImTopicListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.im_topiclist_fragment_recyclerview_item_layout, parent, false);
         return new ImTopicListViewHolder(view);
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull ImTopicListViewHolder holder, int position) {
-        setData(holder, dataList.get(position));
+        holder.setData(dataList.get(position));
+        if (mRecyclerViewItemOnClickListener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mRecyclerViewItemOnClickListener.onItemClicked(holder.itemView,position);
+                }
+            });
+        }
     }
 
 
@@ -76,54 +95,9 @@ public final class ImTopicListRecyclerViewAdapter<E extends MockTopicDataBean> e
         return dataList == null ? 0 : dataList.size();
     }
 
-    private void setData(ImTopicListViewHolder holder, E data) {
-        //获取最新的消息内容
-        StringBuilder msgContent = new StringBuilder();
-        msgContent.append("senderName:");
-        //判断是否是图片 内容
-        boolean isImgMsg = TextUtils.equals(data.getType(), "20");
-        msgContent.append(isImgMsg ? "[图片]" : data.getLatestMsg().getMsg());
-        holder.latestMsgContent.setText(msgContent.toString());
-        //判断topic 类型
-        boolean isGroupType = TextUtils.equals(data.getType(), "2");
-        //设置 topic name
-        holder.topicNameTv.setText(data.getGroupName());
-        // 设置topic 头像
-        if (isGroupType) {
-            holder.topicImage.setImageResource(R.mipmap.ic_launcher);
-        } else {
-            loadTopicAvaral(holder.topicImage, data.getImgUrl(), 0, 0);
-        }
-        //设置发送时间
-        holder.latestMsgTime.setText(timeFormate(data.getLatestMsg().getSendTime()));
-    }
-
-    /**
-     * 对于私聊topic 加载 member
-     */
-    private void loadTopicAvaral(ImageView imageView, String imgUrl, int w, int h) {
-        ViewGroup.LayoutParams params = imageView.getLayoutParams();
-        params.width = w;
-        params.height = h;
-        imageView.setLayoutParams(params);
-
-        //选项
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher);
-        //加载
-        Glide.with(mContext)
-                .load(imgUrl)
-                .apply(options)
-                .into(imageView);
-    }
 
 
-    private String timeFormate(long timeMillis) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
-        return dateFormat.format(new Date(timeMillis));
-    }
+
 
 
     /**
@@ -134,16 +108,73 @@ public final class ImTopicListRecyclerViewAdapter<E extends MockTopicDataBean> e
      * TextView latestMsg sender name + latestMsg content
      * TextView latestMsg Time
      */
-    static class ImTopicListViewHolder extends RecyclerView.ViewHolder {
+    static class ImTopicListViewHolder<E extends MockTopicDataBean> extends RecyclerView.ViewHolder {
         private TextView topicNameTv;
         private TextView latestMsgContent;
         private TextView latestMsgTime;
         private ImageView topicImage;
+        private CircleView redDot;
+
+
 
         public ImTopicListViewHolder(@NonNull View itemView) {
             super(itemView);
-            topicImage = itemView.findViewById(R.id.im_topiclist_recyclerview_topic_avaral_imageview);
-            latestMsgContent = itemView.findViewById(R.id.im_topiclist_recyclerview_latestmsg_content_textview);
+            // TODO: 2018/5/8  findViewById
+            topicImage=itemView.findViewById(R.id.avatar_imageview);
+            latestMsgTime=itemView.findViewById(R.id.time_textView);
+            latestMsgContent=itemView.findViewById(R.id.msg_textview);
+            topicNameTv=itemView.findViewById(R.id.sender_textview);
+            redDot=itemView.findViewById(R.id.reddot_circleview);
+        }
+        private void setData( E data) {
+            //判断是否是图片 内容
+            boolean isImgMsg = TextUtils.equals(data.getType(), "20");
+            //判断topic 类型
+            boolean isGroupType = TextUtils.equals(data.getType(), "2");
+
+            //获取最新的消息内容
+            StringBuilder msgContent = new StringBuilder();
+            msgContent.append("senderName:");
+            msgContent.append(isImgMsg ? "[图片]" : data.getLatestMsg().getMsg());
+            latestMsgContent.setText(msgContent.toString());
+            //设置 topic name
+
+            // 设置topic 头像
+            if (isGroupType) {
+                topicNameTv.setText("班级群聊"+data.getTopicId());
+                topicImage.setImageResource(R.drawable.icon_chat_class);
+            } else {
+                topicNameTv.setText("用户私聊"+data.getTopicId());
+                loadTopicAvaral(topicImage, data.getImgUrl());
+            }
+            //设置发送时间
+            latestMsgTime.setText(timeFormate(data.getLatestMsg().getSendTime()));
+            //设置红点显示
+            redDot.setVisibility(data.isShowDot()?View.VISIBLE:View.INVISIBLE);
+        }
+
+        /**
+         * 对于私聊topic 加载 member头像
+         */
+        private void loadTopicAvaral(ImageView imageView, String imgUrl) {
+            //选项
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .dontAnimate()
+                    .dontTransform()
+                    .placeholder(R.drawable.im_chat_default)
+                    .error(R.drawable.im_chat_default);
+            //加载
+            Glide.with(imageView.getContext())
+                    .load(imgUrl)
+                    .apply(options)
+                    .into(imageView);
+        }
+
+
+        private String timeFormate(long timeMillis) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
+            return dateFormat.format(new Date(timeMillis));
         }
     }
 }

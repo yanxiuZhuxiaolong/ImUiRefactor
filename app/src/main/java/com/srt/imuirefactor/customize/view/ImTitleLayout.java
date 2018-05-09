@@ -3,8 +3,10 @@ package com.srt.imuirefactor.customize.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +22,7 @@ import com.srt.imuirefactor.R;
  */
 
 public class ImTitleLayout extends FrameLayout implements View.OnClickListener {
-
+    private final String TAG=getClass().getSimpleName();
     /**
      * 左右 4个 可点击的控件
      */
@@ -29,6 +31,7 @@ public class ImTitleLayout extends FrameLayout implements View.OnClickListener {
     private TextView title_left_txt;
     private TextView title_right_txt;
     private TextView title_title_txt;
+    private View title_bottom_line;
 
     /**
      * attr 参数
@@ -37,6 +40,11 @@ public class ImTitleLayout extends FrameLayout implements View.OnClickListener {
     private int mRightImgReferenceId;
     private String mLeftTxtStr;
     private String mRightTxtStr;
+    /**
+     * 底部分割线
+     * */
+    private int mBottomLineColor;
+    private float mBottomLineHeight=1;
 
     private int mLeftMergin = 0;
     private int mRightMergin = 0;
@@ -62,20 +70,24 @@ public class ImTitleLayout extends FrameLayout implements View.OnClickListener {
         mRightTxtStr = typedArray.getString(R.styleable.ImTitleLayout_im_title_right_txt);
         mLeftMergin = typedArray.getDimensionPixelSize(R.styleable.ImTitleLayout_im_left_margin, 0);
         mRightMergin = typedArray.getDimensionPixelSize(R.styleable.ImTitleLayout_im_right_margin, 0);
+        mBottomLineColor=typedArray.getColor(R.styleable.ImTitleLayout_im_title_bottom_line_color,Color.LTGRAY);
+        mBottomLineHeight=typedArray.getDimensionPixelSize(R.styleable.ImTitleLayout_im_title_bottom_line_height,1);
         typedArray.recycle();
         //实例化 控件
         viewInit();
         //数据初始化
         dateInit();
-
+        listenerInit();
     }
 
     private void viewInit() {
+        Log.i(TAG, "viewInit: ");
         title_left_img = findViewById(R.id.title_left_img);
         title_left_txt = findViewById(R.id.title_left_txt);
         title_right_img = findViewById(R.id.title_right_img);
         title_right_txt = findViewById(R.id.title_right_txt);
         title_title_txt = findViewById(R.id.title_title_txt);
+        title_bottom_line=findViewById(R.id.title_bottom_line);
 
         //左侧边距设置
         RelativeLayout.LayoutParams leftMerginParams = (RelativeLayout.LayoutParams) title_left_img.getLayoutParams();
@@ -100,17 +112,31 @@ public class ImTitleLayout extends FrameLayout implements View.OnClickListener {
      * 初始化显示  xml中设置的数据
      */
     private void dateInit() {
+        Log.i(TAG, "dateInit: ");
         //两边imageview 的判定 如果没设置资源 隐藏
         setLeftImageRes(mLeftImgReferenceId);
         setRightImageRes(mRightImgReferenceId);
         //两边 textview
         setTitleLeftText(mLeftTxtStr);
         setTitleRightText(mRightTxtStr);
+        bottomLineInit();
+
+    }
+    private void bottomLineInit(){
+        Log.i(TAG, "bottomLineInit: ");
+        //bottomline
+        title_bottom_line.setBackgroundColor(mBottomLineColor);
+        ViewGroup.LayoutParams params=title_bottom_line.getLayoutParams();
+        params.height= (int) mBottomLineHeight;
+        title_bottom_line.setLayoutParams(params);
     }
 
 
     private void listenerInit() {
-
+        title_left_img.setOnClickListener(this);
+        title_left_txt.setOnClickListener(this);
+        title_right_txt.setOnClickListener(this);
+        title_right_img.setOnClickListener(this);
     }
 
     /**
